@@ -1,0 +1,273 @@
+-- Copyright © by Adrian Zapała. All rights reserved. Licence: MIT
+
+------------------------------------------------------------------------ 
+BEGIN;
+DELETE FROM employees
+WHERE employee_id = 11;
+SELECT * FROM employees;
+ROLLBACK;
+SELECT * FROM employees;
+------------------------------------------------------------------------ 
+SELECT product_name, price FROM products;
+------------------------------------------------------------------------ 
+SELECT product_id
+FROM sale;
+------------------------------------------------------------------------ 
+SELECT DATEDIFF('2015-08-21', NOW()) AS 'Różnica w dniach';
+------------------------------------------------------------------------ 
+SELECT product_name, price + price * 0.22
+FROM products;
+------------------------------------------------------------------------ 
+SELECT price AS CENA_PRODUKTOW
+FROM products;
+
+SELECT price AS 'CENA PRODUKTOW'
+FROM products;
+
+SELECT price CENA_PRODUKTOW
+FROM products;
+
+SELECT price 'CENA PRODUKTOW'
+FROM products;
+------------------------------------------------------------------------
+SELECT CONCAT(first_name, ' ', last_name) AS 'Imię i nazwisko'
+FROM employees;
+------------------------------------------------------------------------ 
+SELECT * FROM sale;
+
+SELECT DISTINCT product_id
+FROM sale;
+------------------------------------------------------------------------
+SELECT * FROM employees
+WHERE employee_id <> 2;
+
+SELECT * FROM employees
+WHERE employee_id > 4;
+------------------------------------------------------------------------ 
+SELECT * FROM clients
+WHERE first_name LIKE '_a%';
+------------------------------------------------------------------------
+SELECT * FROM clients
+WHERE first_name LIKE '__r%';
+------------------------------------------------------------------------
+SELECT * FROM clients
+WHERE first_name NOT LIKE '_a%';
+------------------------------------------------------------------------
+SELECT * FROM clients
+WHERE last_name LIKE '%a';
+------------------------------------------------------------------------ 
+SELECT * FROM clients
+WHERE first_name = 'Marcin';
+------------------------------------------------------------------------
+SELECT * FROM employees
+WHERE employee_id IN (2, 3, 5);
+------------------------------------------------------------------------ 
+SELECT * FROM employees
+WHERE employee_id NOT IN (2, 3, 5);
+------------------------------------------------------------------------ 
+SELECT * FROM clients
+WHERE client_id >= 4 AND client_id <= 20;
+------------------------------------------------------------------------
+SELECT * FROM clients
+WHERE client_id > 10 AND client_id < 25 AND date_of_birth > '1990-01-01';
+------------------------------------------------------------------------
+SELECT * FROM clients
+WHERE client_id > 20 AND date_of_birth < '1985-01-01';
+------------------------------------------------------------------------
+SELECT * FROM clients
+WHERE client_id IN (3, 9, 10, 11, 12, 15, 17, 24, 27, 31)
+AND phone LIKE '645%' OR PHONE LIKE '533%';
+------------------------------------------------------------------------
+SELECT * FROM clients
+ORDER BY first_name;
+------------------------------------------------------------------------
+SELECT * FROM clients
+ORDER BY first_name DESC;
+------------------------------------------------------------------------
+SELECT * FROM clients
+ORDER BY last_name DESC;
+------------------------------------------------------------------------
+SELECT * FROM clients
+WHERE client_id >= 5 AND  client_id <= 15
+ORDER BY last_name DESC;
+------------------------------------------------------------------------
+SELECT product_name, product_type_id
+FROM products
+WHERE product_id = 1;
+
+SELECT product_type_name
+FROM product_types
+WHERE product_type_id = 2;
+------------------------------------------------------------------------
+SELECT products.product_name, product_types.product_type_name
+FROM products, product_types
+WHERE products.product_type_id = product_types.product_type_id
+AND products.product_id = 1;
+------------------------------------------------------------------------
+SELECT p.product_name, pt.product_type_name
+FROM products p, product_types pt
+WHERE p.product_type_id = pt.product_type_id
+AND p.product_id = 1;
+------------------------------------------------------------------------
+SELECT employee_id, place
+FROM places
+WHERE place_id = 5;
+
+SELECT employee_id, first_name, last_name
+FROM employees
+WHERE employee_id = 6;
+------------------------------------------------------------------------
+SELECT employees.employee_id, employees.first_name, employees.last_name, places.place
+FROM employees, places
+WHERE employees.employee_id = places.employee_id
+AND places.place_id = 5;
+------------------------------------------------------------------------
+SELECT e.employee_id, e.first_name, e.last_name, pl.place
+FROM employees e, places pl
+WHERE e.employee_id = pl.employee_id
+AND pl.place_id = 5;
+------------------------------------------------------------------------
+SELECT product_name, product_type_id
+FROM products
+WHERE product_id = 5;
+
+SELECT product_type_name, product_type_id
+FROM product_types
+WHERE product_type_id = 1;
+------------------------------------------------------------------------
+SELECT p.product_name, pt.product_type_name
+FROM products p, product_types pt
+WHERE p.product_type_id = pt.product_type_id
+AND p.product_id = 5;
+------------------------------------------------------------------------
+SELECT products.product_name, product_types.product_type_name
+FROM products, product_types
+WHERE products.product_type_id = product_types.product_type_id
+AND products.product_id = 5;
+------------------------------------------------------------------------
+SELECT product_name, product_type_id
+FROM products
+WHERE product_id = 7;
+
+SELECT product_type_name
+FROM product_types
+WHERE product_type_id = 3;
+------------------------------------------------------------------------
+SELECT products.product_name, product_types.product_type_name
+FROM products, product_types
+WHERE products.product_type_id = product_types.product_type_id
+AND products.product_id = 7;
+------------------------------------------------------------------------
+SELECT p.product_name, pt.product_type_name
+FROM products p, product_types pt
+WHERE p.product_type_id = pt.product_type_id
+AND p.product_id = 7;
+------------------------------------------------------------------------
+SELECT product_id, client_id
+FROM sale
+WHERE client_id = 23;
+
+SELECT product_name, product_type_id
+FROM products
+WHERE product_id = 3;
+
+SELECT product_type_name
+FROM product_types
+WHERE product_type_id = 1;
+
+SELECT first_name, last_name
+FROM clients
+WHERE client_id = 23;
+------------------------------------------------------------------------
+SELECT p.product_name, s.client_id
+FROM products p, sale s
+WHERE p.product_id = s.product_id
+AND s.client_id = 23;
+------------------------------------------------------------------------
+SELECT product_id, client_id
+FROM sale
+WHERE product_id = 7;
+
+SELECT first_name, last_name
+FROM clients
+WHERE client_id = 14;
+------------------------------------------------------------------------
+SELECT s.product_id, s.client_id, c.first_name, c.last_name
+FROM sale s, clients c
+WHERE s.client_id = c.client_id
+AND c.client_id = 14;
+------------------------------------------------------------------------
+SELECT sale.product_id, sale.client_id, clients.first_name, clients.last_name
+FROM sale, clients
+WHERE sale.client_id = clients.client_id
+AND sale.product_id = 7;
+------------------------------------------------------------------------
+SELECT CONCAT(w.first_name, ' ', w.last_name, ' jest podwadnym dla ', m.first_name, ' ', m.last_name)
+FROM employees w, employees m
+WHERE w.manager_id = m.employee_id
+ORDER BY w.first_name;
+------------------------------------------------------------------------
+SELECT AVG(salary)
+FROM employees;
+------------------------------------------------------------------------
+SELECT COUNT(client_id)
+FROM clients;
+------------------------------------------------------------------------
+SELECT MAX(quantity)
+FROM sale;
+
+SELECT MIN(quantity)
+FROM sale;
+------------------------------------------------------------------------
+SELECT MAX(salary)
+FROM employees;
+
+SELECT MIN(salary)
+FROM employees;
+------------------------------------------------------------------------
+SELECT SUM(quantity)
+FROM sale;
+------------------------------------------------------------------------
+SELECT * FROM employees;
+
+SELECT academic_title, AVG(salary)
+FROM employees
+GROUP BY academic_title;
+------------------------------------------------------------------------
+SELECT academic_title, SUM(salary)
+FROM employees
+GROUP BY academic_title;
+------------------------------------------------------------------------
+SELECT client_id, SUM(quantity)
+FROM sale
+GROUP BY client_id;
+------------------------------------------------------------------------
+SELECT employee_id, AVG(salary)
+FROM employees
+WHERE salary < 6000
+GROUP BY employee_id
+HAVING AVG(salary) > 2000
+ORDER BY employee_id;
+------------------------------------------------------------------------
+USE nba;
+SELECT * FROM teams;
+SELECT * FROM teams
+WHERE team = 'Los Angeles Lakers';
+SELECT * FROM teams
+WHERE height > 2;
+------------------------------------------------------------------------
+SELECT * FROM celestial_objects
+WHERE sign = 'PL'
+AND (aphelion_au > (1000000000 / 149600000) OR perihelion_au > (1000000000 / 149600000)); -- 6.68 AU to więcej niż 1 mld km
+------------------------------------------------------------------------
+SELECT name_of_co, explorer, yr, perihelion_au 
+FROM discover, celestial_objects 
+WHERE discover.id=celestial_objects.id AND perihelion_au >= 0.5 AND perihelion_au <= 1.0;
+------------------------------------------------------------------------
+SELECT name_of_co, explorer, yr, radius_km 
+FROM discover, celestial_objects 
+WHERE discover.id=celestial_objects.id AND (name_of_co LIKE "P%" OR name_of_co LIKE "%N");
+------------------------------------------------------------------------
+SELECT name_of_co, explorer, yr 
+FROM discover, celestial_objects 
+WHERE discover.id=celestial_objects.id AND explorer LIKE "L%" AND explorer NOT LIKE "LONEOS";
